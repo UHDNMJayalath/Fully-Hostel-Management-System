@@ -21,34 +21,42 @@
         <!-- Buttons -->
         <div class="mt-3 px-4 space-y-3">
 
-            <button class="w-full py-2 bg-white text-black rounded-full font-semibold hover:bg-blue-300 flex items-center justify-start px-4 space-x-2">
+            <!-- Dashboard -->
+            <a href="/student-dashboard"
+               class="w-full py-2 bg-white text-black rounded-full font-semibold hover:bg-blue-300 flex items-center justify-start px-4 space-x-2 transition duration-200">
                 <img src="images/Dashboard.svg" alt="Dashboard Icon" class="w-5 h-5" />
                 <span>Dashboard</span>
-            </button>
+            </a>
 
-
-            <button class="w-full py-2 bg-blue-500 text-white rounded-full font-semibold hover:bg-blue-600 flex items-center justify-start px-4 space-x-2 transition duration-200">
+            <!-- History -->
+            <a href="/Student_History_Residence"
+               class="w-full py-2 bg-blue-500 text-white rounded-full font-semibold hover:bg-blue-600 flex items-center justify-start px-4 space-x-2 transition duration-200">
                 <img src="images/history.svg" alt="History Icon" class="w-5 h-5" />
                 <span>History</span>
-            </button>
+            </a>
 
-            <button class="w-full py-2 bg-white text-black rounded-full font-semibold hover:bg-blue-300 flex items-center justify-start px-4 space-x-2">
+            <!-- Complains -->
+            <a href="/Student_ComplainsAndRequests"
+               class="w-full py-2 bg-white text-black rounded-full font-semibold hover:bg-blue-300 flex items-center justify-start px-4 space-x-2 transition duration-200">
                 <img src="images/Complain.svg" alt="Complains Icon" class="w-5 h-5" />
-                <span>Complains & Request</span>
-            </button>
+                <span>Service Desk</span>
+            </a>
 
         </div>
+
     </div>
 
     <!-- Logout Button at Bottom -->
     <footer>
         <div class="text-center mb-6 px-4">
-            <button  method="get" type="submit" class="w-full py-2 bg-white text-black rounded-full font-bold hover:bg-blue-400 focus:outline-none flex items-center justify-center space-x-2">
+            <a href="/logout"
+               class="w-full py-2 bg-white text-black rounded-full font-bold hover:bg-blue-400 focus:outline-none flex items-center justify-center space-x-2">
                 <img src="images/LogOut.png" alt="Logout Icon" class="w-5 h-5 -rotate-90" />
                 <span>Log Out</span>
-            </button>
+            </a>
         </div>
     </footer>
+
 
 
 </div>
@@ -75,17 +83,25 @@
 
         <!-- Payment History Section -->
         <div class="bg-white rounded-lg shadow p-6 mb-6">
-            <!-- Three Horizontal Buttons (Fixed & Centered Text) -->
+
+            <!-- Three Horizontal Buttons (Redirect) -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-                <button class="w-full bg-blue-200 hover:bg-blue-300 text-black py-2 font-bold text-center rounded transition">
+
+                <a href="/Student_History_Residence"
+                   class="w-full bg-blue-200 hover:bg-blue-300 text-black py-2 font-bold text-center rounded transition block">
                     Residence
-                </button>
-                <button class="w-full bg-blue-200 hover:bg-blue-300 text-black py-2 font-bold text-center rounded transition">
+                </a>
+
+                <a href="/Student_History_Payment"
+                   class="w-full bg-blue-200 hover:bg-blue-300 text-black py-2 font-bold text-center rounded transition block">
                     Payment
-                </button>
-                <button class="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 font-bold text-center rounded transition">
+                </a>
+
+                <a href="/Student_History_Damage"
+                   class="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 font-bold text-center rounded transition block">
                     Damage
-                </button>
+                </a>
+
             </div>
 
             <div class="overflow-x-auto">
