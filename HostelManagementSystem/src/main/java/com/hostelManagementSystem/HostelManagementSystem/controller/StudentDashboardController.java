@@ -16,25 +16,105 @@ public class StudentDashboardController {
     @Autowired
     private StudentRepository studentRepository;
 
-    @GetMapping("/dashboard")
+    @GetMapping("/student-dashboard")
     public String dashboard(HttpSession session, Model model) {
-        // session එකෙන් logged-in user email එක ගන්නවා
+
         String email = (String) session.getAttribute("loggedInUserEmail");
 
         if (email == null) {
-            // login නොවූ අය => login page එකට redirect කරන්න (example)
+
             return "redirect:/login";
         }
 
-        // email එකෙන් student data fetch කරනවා
         Optional<Student> studentOptional = studentRepository.findByEmail(email);
 
         if (studentOptional.isPresent()) {
             model.addAttribute("student", studentOptional.get());
-            return "dashboard";  // thymeleaf template name
+            return "/student-dashboard";
         } else {
-            // email එකට ගැලපෙන student එකක් නැත්තම් error page එකට යන්න
-            return "error";  // හෝ වෙනම page එකක්
+
+            return "error";
         }
     }
+
+
+
+
+    @GetMapping("/Student_History_Residence")
+    public String studentHistory(HttpSession session, Model model) {
+        String email = (String) session.getAttribute("loggedInUserEmail");
+
+        if (email == null) {
+            return "redirect:/login";
+        }
+
+        Optional<Student> studentOptional = studentRepository.findByEmail(email);
+        if (studentOptional.isPresent()) {
+            model.addAttribute("student", studentOptional.get());
+            return "Student_History_Residence";
+        } else {
+            return "error";
+        }
+    }
+
+
+    @GetMapping("Student_ComplainsAndRequests")
+    public String studentComplaints(HttpSession session, Model model) {
+        String email = (String) session.getAttribute("loggedInUserEmail");
+
+        if (email == null) {
+            return "redirect:/login";
+        }
+
+        Optional<Student> studentOptional = studentRepository.findByEmail(email);
+        if (studentOptional.isPresent()) {
+            model.addAttribute("student", studentOptional.get());
+            return "Student_ComplainsAndRequests"; // <-- Thymeleaf HTML file name
+        } else {
+            return "error";
+        }
+    }
+
+
+    @GetMapping("/Student_History_Payment")
+    public String paymentPage(HttpSession session, Model model) {
+        String email = (String) session.getAttribute("loggedInUserEmail");
+
+        if (email == null) {
+            return "redirect:/login";
+        }
+
+        Optional<Student> studentOptional = studentRepository.findByEmail(email);
+        if (studentOptional.isPresent()) {
+            model.addAttribute("student", studentOptional.get());
+            return "Student_History_Payment"; // <- this is your .html page
+        } else {
+            return "error";
+        }
+    }
+
+
+    @GetMapping("/Student_History_Damage")
+    public String damagePage(HttpSession session, Model model) {
+        String email = (String) session.getAttribute("loggedInUserEmail");
+
+        if (email == null) {
+            return "redirect:/login";
+        }
+
+        Optional<Student> studentOptional = studentRepository.findByEmail(email);
+        if (studentOptional.isPresent()) {
+            model.addAttribute("student", studentOptional.get());
+            return "Student_History_Damage"; // <- your .html file name
+        } else {
+            return "error";
+        }
+    }
+
+
+
+
+
+
+
 }
