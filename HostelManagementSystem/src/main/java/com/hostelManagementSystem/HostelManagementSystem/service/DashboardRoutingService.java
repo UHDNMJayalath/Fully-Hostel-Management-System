@@ -1,32 +1,31 @@
 package com.hostelManagementSystem.HostelManagementSystem.service;
 
-import com.hostelManagementSystem.HostelManagementSystem.entity.Admin;
 import com.hostelManagementSystem.HostelManagementSystem.entity.Student;
-import com.hostelManagementSystem.HostelManagementSystem.entity.SubWarden;
-import com.hostelManagementSystem.HostelManagementSystem.repository.AdminRepository;
+import com.hostelManagementSystem.HostelManagementSystem.entity.UserRoles;
 import com.hostelManagementSystem.HostelManagementSystem.repository.StudentRepository;
-import com.hostelManagementSystem.HostelManagementSystem.repository.SubWardenRepository;
+import com.hostelManagementSystem.HostelManagementSystem.repository.UserRolesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
+
+import java.util.Optional;
 
 @Service
 public class DashboardRoutingService {
 
     @Autowired
     private StudentRepository studentRepo;
+
     @Autowired
-    private AdminRepository adminRepo;
-    @Autowired
-    private SubWardenRepository subWardenRepo;
+    private UserRolesRepository userRolesRepo;
 
     public String getDashboardByEmailAndPassword(String email, String password, Model model) {
 
-        // Student check
-        if (studentRepo.findByEmail(email).isPresent()) {
-            Student student = studentRepo.findByEmail(email).get();
-            if (student.getPassword().equals(password)) {
-                model.addAttribute("student", student);
+        // Step 1: Student login (check from student table)
+        Optional<Student> studentOpt = studentRepo.findByEmail(email);
+        if (studentOpt.isPresent()) {
+            if (studentOpt.get().getPassword().equals(password)) {
+                model.addAttribute("student", studentOpt.get());
                 return "student-dashboard";
             } else {
                 model.addAttribute("error", "Incorrect password.");
@@ -34,34 +33,32 @@ public class DashboardRoutingService {
             }
         }
 
-        // Admin check
-        else if (adminRepo.findByEmail(email).isPresent()) {
-            Admin admin = adminRepo.findByEmail(email).get();
-            if (admin.getPassword().equals(password)) {
-                model.addAttribute("admin", admin);
-                return "admin-dashboard";
-            } else {
+        // Step 2: Other roles (check from user_roles table)
+        Optional<UserRoles> roleOpt = userRolesRepo.findByEmail(email);
+        if (roleOpt.isPresent()) {
+            UserRoles user = roleOpt.get();
+            if (!user.getPassword().equals(password)) {
                 model.addAttribute("error", "Incorrect password.");
                 return "login";
             }
-        }
 
-        // Subwarden check
-        else if (subWardenRepo.findByEmail(email).isPresent()) {
-            SubWarden sw = subWardenRepo.findByEmail(email).get();
-            if (sw.getPassword().equals(password)) {
-                model.addAttribute("subwarden", sw);
-                return "subwarden-dashboard";
-            } else {
-                model.addAttribute("error", "Incorrect password.");
-                return "login";
+            String role = user.getRole().toLowerCase();
+            switch (role) {
+                case "vc": return "vc-dashboard";
+                case "student_services_bursar": return "bursar-dashboard";
+                case "dean": return "dean-dashboard";
+                case "sub warden": return "sub warden-dashboard";
+                case "management": return "management-dashboard";
+                case "registration": return "registration-dashboard";
+                case "director": return "director-dashboard";
+                default:
+                    model.addAttribute("error", "Invalid role.");
+                    return "login";
             }
         }
 
-        // No user found
-        else {
-            model.addAttribute("error", "Invalid email.");
-            return "login";
-        }
+        // Step 3: No user found
+        model.addAttribute("error", "Invalid email.");
+        return "login";
     }
 }

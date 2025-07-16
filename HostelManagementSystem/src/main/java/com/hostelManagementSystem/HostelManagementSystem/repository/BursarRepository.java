@@ -5,6 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
 
-public interface SubWardenRepository extends JpaRepository<SubWarden, Long> {
+public interface BursarRepository extends JpaRepository<SubWarden, Long> {
     Optional<SubWarden> findByEmail(String email);
 }
