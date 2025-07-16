@@ -1,4 +1,4 @@
 package com.hostelManagementSystem.HostelManagementSystem.repository;
 
-public class HostelRepository {
+public interface DamageRepository {
 }
