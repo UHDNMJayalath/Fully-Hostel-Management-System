@@ -20,6 +20,17 @@ public class AuthController {
         return "login";
     }
 
+    @GetMapping("/login")
+    public String getLoginPage() {
+        return "login";
+    }
+
+
+    @GetMapping("/signup") // <-- ✅ Add this
+    public String showSignupForm() {
+        return "signup";
+    }
+
     @PostMapping("/login")
     public String login(@RequestParam String email,
                         @RequestParam String password,
@@ -27,20 +38,38 @@ public class AuthController {
                         HttpSession session) {
 
         session.setAttribute("loggedInUserEmail", email);
-
         return dashboardRoutingService.getDashboardByEmailAndPassword(email, password, model);
     }
 
+    @PostMapping("/signup")
+    public String processSignup(@RequestParam String email,
+                                @RequestParam String password,
+                                @RequestParam("confirm_password") String confirmPassword,
+                                Model model) {
+
+        if (!password.equals(confirmPassword)) {
+            model.addAttribute("error", "Passwords do not match");
+            return "signup";
+        }
+
+        if (!email.endsWith("pdn.ac.lk")) {
+            model.addAttribute("error", "Email must end with pdn.ac.lk");
+            return "signup";
+        }
+
+        if (dashboardRoutingService.existsByEmail(email)) {
+            model.addAttribute("error", "Email is already registered");
+            return "signup";
+        }
+
+        dashboardRoutingService.saveNewUser(email, password);
+        return "redirect:/?signupSuccess"; // Optional: Add query param to indicate success
+    }
 
     @GetMapping("/logout")
     public String logout(HttpSession session) {
         session.invalidate();
         return "redirect:/";
     }
-
-
-
-
-
-
 }
+

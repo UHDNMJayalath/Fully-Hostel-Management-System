@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Controller
-public class VcDvcController {
+public class vc_dvcController {
 
     @Autowired
     private StudentRepository studentRepository;
@@ -23,23 +23,24 @@ public class VcDvcController {
     private HostelRepository hostelRepository;
 
     @GetMapping("/vc_dvc-dashboard")
-    public String viewVcDvcDashboard(@RequestParam(value = "search", required = false) String studentId, Model model) {
+    public String viewVcDvcDashboard(@RequestParam(value = "q", required = false) String studentId, Model model) {
         List<Student> students = studentRepository.findAll();
         List<Hostel> hostels = hostelRepository.findAll();
 
-        model.addAttribute("totalStudents", students.size());
-        model.addAttribute("totalHostels", hostels.size());
-        model.addAttribute("students", students);
+        model.addAttribute("studentCount", students.size());
+        model.addAttribute("hostelCount", hostels.size());
 
         if (studentId != null && !studentId.isEmpty()) {
             Optional<Student> foundStudent = studentRepository.findByStudentId(studentId);
             if (foundStudent.isPresent()) {
-                model.addAttribute("searchedStudent", foundStudent.get());
+                model.addAttribute("student", foundStudent.get()); //  Rename here
             } else {
-                model.addAttribute("searchError", "Student not found");
+                model.addAttribute("student", null); //  Still bind to 'student'
             }
+            model.addAttribute("searchQuery", studentId); // Send query back
         }
 
         return "vc_dvc-dashboard";
     }
+
 }

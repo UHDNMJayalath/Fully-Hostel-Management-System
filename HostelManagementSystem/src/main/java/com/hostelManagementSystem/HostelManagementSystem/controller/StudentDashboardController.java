@@ -33,7 +33,7 @@ public class StudentDashboardController {
             return "redirect:/login";
         }
 
-        Optional<Student> studentOptional = studentRepository.findByEmail(email);
+        Optional<Student> studentOptional = studentRepository.findByEmailIgnoreCase(email);
 
         if (studentOptional.isPresent()) {
             model.addAttribute("student", studentOptional.get());
@@ -58,7 +58,7 @@ public class StudentDashboardController {
             return "redirect:/login";
         }
 
-        Optional<Student> studentOptional = studentRepository.findByEmail(email);
+        Optional<Student> studentOptional = studentRepository.findByEmailIgnoreCase(email);
         if (studentOptional.isPresent()) {
             Student student = studentOptional.get();
             model.addAttribute("student", student);
@@ -82,7 +82,7 @@ public class StudentDashboardController {
             return "redirect:/login";
         }
 
-        Optional<Student> studentOptional = studentRepository.findByEmail(email);
+        Optional<Student> studentOptional = studentRepository.findByEmailIgnoreCase(email);
         if (studentOptional.isPresent()) {
             model.addAttribute("student", studentOptional.get());
             return "Student_ComplainsAndRequests"; // <-- Thymeleaf HTML file name
@@ -104,7 +104,7 @@ public class StudentDashboardController {
             return "redirect:/login";
         }
 
-        Optional<Student> studentOptional = studentRepository.findByEmail(email);
+        Optional<Student> studentOptional = studentRepository.findByEmailIgnoreCase(email);
         if (studentOptional.isPresent()) {
             Student student = studentOptional.get();
             model.addAttribute("student", student);
@@ -131,7 +131,7 @@ public class StudentDashboardController {
             return "redirect:/login";
         }
 
-        Optional<Student> studentOptional = studentRepository.findByEmail(email);
+        Optional<Student> studentOptional = studentRepository.findByEmailIgnoreCase(email);
         if (studentOptional.isPresent()) {
             Student student = studentOptional.get();
             model.addAttribute("student", student);

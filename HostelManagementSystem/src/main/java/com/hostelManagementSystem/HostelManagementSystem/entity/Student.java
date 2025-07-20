@@ -11,7 +11,6 @@ public class Student {
 
     private String name;
     private String email;
-    private String password;
     private String currentHostel;
     private String faculty;
     private String intake;
@@ -42,7 +41,6 @@ public class Student {
         this.studentId = studentId;
         this.name = name;
         this.email = email;
-        this.password = password;
         this.currentHostel = currentHostel;
         this.faculty = faculty;
         this.intake = intake;
@@ -63,8 +61,6 @@ public class Student {
     public String getEmail() { return email; }
     public void setEmail(String email) { this.email = email; }
 
-    public String getPassword() { return password; }
-    public void setPassword(String password) { this.password = password; }
 
     public String getCurrentHostel() { return currentHostel; }
     public void setCurrentHostel(String currentHostel) { this.currentHostel = currentHostel; }
